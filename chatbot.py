@@ -33,7 +33,8 @@ def main():
     # on different commands - answer in Telegram
     dispatcher.add_handler(CommandHandler("add", add))
     dispatcher.add_handler(CommandHandler("help", help_command))
-    
+    dispatcher.add_handler(CommandHandler("hello", hello))
+
     # To start the bot:
     updater.start_polling()
     updater.idle()
@@ -73,6 +74,16 @@ def add(update: Update, context: CallbackContext) -> None:
     except (IndexError, ValueError):
         update.message.reply_text('Usage: /add <keyword>')
 
+def hello(update: Update, context: CallbackContext) -> None:
+    """Send a message when the command /hello is issued."""
+    try:
+        name = ' '.join(context.args)
+        if name:  # Check if a name was provided
+            update.message.reply_text(f'Good day, {name}!')
+        else:
+            update.message.reply_text('Good day!')
+    except (IndexError, ValueError):
+        update.message.reply_text('Usage: /hello <name>')
 
 
 if __name__ == '__main__':
